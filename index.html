@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verifikasi Bukti Transfer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">PT XYZ · DIVISI PEMBUKUAN</p>
+      <h1>Verifikasi Bukti Transfer</h1>
+      <p class="sub">Pembacaan OCR dan pemeriksaan indikasi penggunaan bukti transfer berulang.</p>
+    </div>
+    <span class="local-tag">Mode GitHub Pages</span>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <div class="section-head">
+        <div><h2>1. Unggah bukti transfer</h2><p>Pilih satu atau beberapa gambar sekaligus (JPG, PNG, atau WEBP).</p></div>
+      </div>
+      <label class="dropzone" for="files">
+        <span class="upload-icon">↑</span>
+        <strong>Pilih gambar bukti transfer</strong>
+        <span>atau tarik dan letakkan gambar di area ini</span>
+        <input id="files" type="file" accept="image/*" multiple>
+      </label>
+      <div class="toolbar">
+        <button id="runOcr" class="primary" disabled>Mulai proses OCR</button>
+        <button id="clearQueue" class="secondary" disabled>Kosongkan antrean</button>
+        <span id="queueInfo" class="muted">Belum ada gambar dipilih.</span>
+      </div>
+      <div id="progressWrap" class="progress-wrap hidden">
+        <div class="progress-label"><span id="progressText">Menyiapkan OCR…</span><span id="progressPct">0%</span></div>
+        <div class="progress"><div id="progressBar"></div></div>
+      </div>
+      <div id="notice" class="notice hidden" role="status"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head row-between">
+        <div><h2>2. Hasil pembacaan dan pemeriksaan</h2><p>Periksa dan koreksi hasil OCR sebelum menyimpan ke riwayat.</p></div>
+        <button id="export" class="secondary" disabled>Ekspor Excel</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Gambar</th><th>Waktu transaksi</th><th>Bank penerima</th><th>Nominal</th><th>Nomor referensi</th><th>Status pemeriksaan</th>
+          </tr></thead>
+          <tbody id="results">
+            <tr><td colspan="6" class="empty">Belum ada hasil OCR. Unggah gambar lalu mulai proses.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="toolbar bottom-tools">
+        <button id="saveResults" class="primary" disabled>Simpan hasil ke riwayat</button>
+        <span class="muted">Data hanya disimpan pada browser dan perangkat ini.</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head row-between">
+        <div><h2>3. Riwayat bukti transfer</h2><p>Data yang sudah disimpan menjadi pembanding untuk unggahan berikutnya pada browser ini.</p></div>
+        <button id="clearHistory" class="danger-outline">Hapus riwayat lokal</button>
+      </div>
+      <div class="history-summary" id="historySummary">0 bukti tersimpan</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tanggal disimpan</th><th>Waktu transaksi</th><th>Bank penerima</th><th>Nominal</th><th>Nomor referensi</th></tr></thead>
+          <tbody id="history"><tr><td colspan="5" class="empty">Riwayat masih kosong.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <strong>Catatan penggunaan:</strong> OCR adalah pembacaan otomatis, bukan verifikasi mutlak. Pastikan data sudah benar sebelum disimpan. Untuk riwayat bersama antarcabang/perangkat diperlukan database dan backend; GitHub Pages saja tidak menyediakan penyimpanan terpusat.
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
